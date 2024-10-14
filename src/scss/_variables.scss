@@ -1,0 +1,39 @@
+
+@font-face {
+    font-family: "Inter";
+    src: url('../fonts/Inter-VariableFont.ttf') format('woff2');
+    font-weight: 100 900; /* Zakres wag dla czcionki zmiennej */
+    font-style: normal;
+}
+
+$font-family-base: "Inter", sans-serif; // Zamień na czcionkę, której chcesz używać
+
+$primary: #00C65E;
+$black:    #1A1E29 !default;
+
+
+
+$offcanvas-box-shadow: 0 1rem 3rem rgba(0, 0, 0, .175);
+
+// Customize some defaults
+$body-color: #333;
+$body-bg: #fff;
+$border-radius: .4rem;
+
+$font-size-base: 0.875rem;
+$small-font-size:            $font-size-base;
+
+
+//Badges
+
+
+
+// scss-docs-start badge-variables
+$badge-font-size:                   .8em !default;
+$badge-font-weight:                 400 !default;
+$badge-color: $black;
+//$badge-padding-y:                   .35em !default;
+//$badge-padding-x:                   .65em !default;
+//$badge-border-radius:               $border-radius !default;
+
+

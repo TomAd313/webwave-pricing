@@ -1,0 +1,67 @@
+// Example of a custom component
+
+.icon-list {
+  padding-left: 0;
+  list-style: none;
+
+  li {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: .25rem;
+    width: 100%;
+
+    &::before {
+      display: block;
+      flex-shrink: 0;
+      width: 16px; /* lub inny preferowany rozmiar */
+      height: 16px;
+      margin-right: .5rem;
+      margin-top: 4px;
+      content: "";
+      background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20height%3D%2216px%22%20viewBox%3D%220%20-960%20960%20960%22%20width%3D%2216px%22%20fill%3D%22%2300C65E%22%3E%3Cpath%20d%3D%22M382-240%20154-468l57-57%20171%20171%20367-367%2057%2057-424%20424Z%22/%3E%3C/svg%3E');
+    }
+
+    strong {
+      display: contents;
+    }
+
+    span {
+      display: flex;
+    }
+
+  }
+
+}
+
+.icon-check {
+  display: inline-block;
+  width: 16px; /* lub inny preferowany rozmiar */
+  height: 16px;
+  margin-top: 4px;
+  background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20height%3D%2216px%22%20viewBox%3D%220%20-960%20960%20960%22%20width%3D%2216px%22%20fill%3D%22%231A1E29%22%3E%3Cpath%20d%3D%22M382-240%20154-468l57-57%20171%20171%20367-367%2057%2057-424%20424Z%22/%3E%3C/svg%3E');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.icon-help {
+  display: inline-block;
+  width: 16px; /* Ustaw szerokość ikony */
+  height: 16px; /* Ustaw wysokość ikony */
+  margin-top: 4px;
+  background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20height%3D%2216px%22%20viewBox%3D%220%20-960%20960%20960%22%20width%3D%2216px%22%20fill%3D%22%23e8eaed%22%3E%3Cpath%20d%3D%22M478-240q21%200%2035.5-14.5T528-290q0-21-14.5-35.5T478-340q-21%200-35.5%2014.5T428-290q0%2021%2014.5%2035.5T478-240Zm-36-154h74q0-33%207.5-52t42.5-52q26-26%2041-49.5t15-56.5q0-56-41-86t-97-30q-57%200-92.5%2030T342-618l66%2026q5-18%2022.5-39t53.5-21q32%200%2048%2017.5t16%2038.5q0%2020-12%2037.5T506-526q-44%2039-54%2059t-10%2073Zm38%20314q-83%200-156-31.5T197-197q-54-54-85.5-127T80-480q0-83%2031.5-156T197-763q54-54%20127-85.5T480-880q83%200%20156%2031.5T763-763q54%2054%2085.5%20127T880-480q0%2083-31.5%20156T763-197q-54%2054-127%2085.5T480-80Zm0-80q134%200%20227-93t93-227q0-134-93-227t-227-93q-134%200-227%2093t-93%20227q0%20134%2093%20227t227%2093Zm0-320Z%22/%3E%3C/svg%3E');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.icon-gift {
+  display: inline-block;
+  width: 16px; /* Ustaw szerokość ikony */
+  height: 16px; /* Ustaw wysokość ikony */
+  margin-top: 4px;
+  background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http://www.w3.org/2000/svg%22%20height%3D%2216px%22%20viewBox%3D%220%20-960%20960%20960%22%20width%3D%2216px%22%20fill%3D%22%2300C65E%22%3E%3Cpath%20d%3D%22M160-280v80h640v-80H160Zm0-440h88q-5-9-6.5-19t-1.5-21q0-50%2035-85t85-35q30%200%2055.5%2015.5T460-826l20%2026%2020-26q18-24%2044-39t56-15q50%200%2085%2035t35%2085q0%2011-1.5%2021t-6.5%2019h88q33%200%2056.5%2023.5T880-640v440q0%2033-23.5%2056.5T800-120H160q-33%200-56.5-23.5T80-200v-440q0-33%2023.5-56.5T160-720Zm0%20320h640v-240H596l84%20114-64%2046-136-184-136%20184-64-46%2082-114H160v240Zm200-320q17%200%2028.5-11.5T400-760q0-17-11.5-28.5T360-800q-17%200-28.5%2011.5T320-760q0%2017%2011.5%2028.5T360-720Zm240%200q17%200%2028.5-11.5T640-760q0-17-11.5-28.5T600-800q-17%200-28.5%2011.5T560-760q0%2017%2011.5%2028.5T600-720Z%22/%3E%3C/svg%3E');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
