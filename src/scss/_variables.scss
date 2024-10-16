@@ -6,13 +6,18 @@
     font-style: normal;
 }
 
+//Fonts
 $font-family-base: "Inter", sans-serif; // Zamień na czcionkę, której chcesz używać
+$font-size-base: 0.875rem;
+$small-font-size:            $font-size-base;
 
+//Colors
 $primary: #00C65E;
+$secondary: #F3F4F7;
+$success: #EBFFF4;
 $black:    #1A1E29 !default;
 
-
-
+//Shadows
 $offcanvas-box-shadow: 0 1rem 3rem rgba(0, 0, 0, .175);
 
 // Customize some defaults
@@ -20,20 +25,13 @@ $body-color: #333;
 $body-bg: #fff;
 $border-radius: .4rem;
 
-$font-size-base: 0.875rem;
-$small-font-size:            $font-size-base;
 
 
 //Badges
-
-
-
-// scss-docs-start badge-variables
 $badge-font-size:                   .8em !default;
 $badge-font-weight:                 400 !default;
-$badge-color: $black;
-//$badge-padding-y:                   .35em !default;
-//$badge-padding-x:                   .65em !default;
+$badge-color:                       $black;
+$badge-padding-y:                   .7em !default;
+$badge-padding-x:                   .9em !default;
 //$badge-border-radius:               $border-radius !default;
-
 

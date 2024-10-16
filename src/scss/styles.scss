@@ -136,15 +136,13 @@ main {
 }
 
 small {
-  @extend  .fw-light
-
-
+  @extend  .fw-light;
 }
 
 .badge {
-  background-color: #EBFFF4;
-  ;
+  @extend .bg-success;
 }
+
 
 
 .pricing-header {
@@ -161,23 +159,164 @@ small {
 
 }
 
+.btn-secondary {
+  @extend .btn;
+  @extend  .border-dark;
+
+  &:hover {
+    @extend .bg-white;
+  }
+
+}
+
+
+
+.btn-primary {
+  @extend .btn;
+  @extend  .border-primary;
+  @extend .btn-lg;
+  @extend .w-100;
+  @extend .text-white;
+
+  &:hover {
+    background-color: #00AB50 !important;
+  }
+
+}
+
+
+
 
 .card {
-  @extend  .mb-4;
-  @extend  .rounded-0;
-  @extend  .shadow-sm;
+  
+  @extend .rounded-0;
+  @extend .shadow-sm;
+  @extend .mt-4;
+  
+  h1 {
+    @extend .display-5;
+    font-weight: bold;
+  }
 
   .card-header {
-    @extend .py-3;
+
+    @extend .py-4;
+    @extend  .rounded-0;
+   
+    background-color: transparent;
+    border: none;
+    height: 7rem;
 
     h4 {
-      @extend .my-0;
-      @extend .fw-normal;
+      @extend .mb-1;
+      font-weight: bold;
     }
+
+  }
+
+  .card-body {
+
+    @extend .p-3;
+    @extend .pt-0;
+
+    height: 20rem;
+
+    h1 {
+      @extend .m-0;
+    }
+
+  }
+
+  .card-footer {
+    @extend .pb-4;
+    background-color: transparent;
+    border: none;
 
   }
 
 }
 
 
+.card-highlighted {
+
+    .btn {
+      @extend .btn-primary;
+    }
+
+    .badge-sticker {
+
+      @extend .bg-dark;
+      @extend .text-white;
+
+      position: relative;
+      top: -1rem;
+      margin-left: 2rem;
+      margin-right: 2rem;
+    
+    }
+
+    &.card {
+      @extend .border;
+      @extend .border-primary;
+      @extend .bg-success;
+
+      .card-header {
+        margin-top: -1.7rem;
+      }
+
+    }
+  }
+
+.icon-help {
+  @extend .ms-auto;
+}
+
+
+table {
+
+  @extend .table-bordered;
+  @extend .table-striped;
+  
+
+  th {
+    
+    @extend .h6;
+    font-weight: bold;
+    @extend .py-3;
+    
+    
+
+
+    &:nth-child(2) {
+      text-align: center;
+
+    }
+
+    &:nth-child(3) {
+      text-align: center;
+      @extend .bg-success;
+    }
+
+    &:nth-child(4) {
+      text-align: center;
+    }
+
+  }
+
+  td:nth-child(2) {
+    text-align: center;
+  }
+
+  td:nth-child(3) {
+    text-align: center;
+    @extend .bg-success;
+
+  }
+
+  td:nth-child(4) {
+    text-align: center;
+  }
+
+
+}
  

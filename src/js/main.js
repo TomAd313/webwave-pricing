@@ -54,15 +54,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-    // JavaScript do obsługi przełączania strzałki
-    const button = document.getElementById('comparisonTableButton');
-    const icon = button.querySelector('.icon');
+   // Przyciski i ikony
+   const button = document.getElementById('comparisonTableButton');
+   const icon = button.querySelector('.icon');
+   const collapseElement = document.getElementById('comparisonTable');
 
+   // Dodanie event listenera dla zdarzeń 'show' i 'hide' dla elementu collapse
+   collapseElement.addEventListener('show.bs.collapse', function () {
+       icon.classList.remove('icon-down');
+       icon.classList.add('icon-up');
+   });
 
-    document.getElementById('comparisonTable').addEventListener('hidden.bs.collapse', function () {
-      icon.innerHTML = '&darr;'; // Zmieniamy ikonę na strzałkę w dół
-    });
-
-    document.getElementById('comparisonTable').addEventListener('shown.bs.collapse', function () {
-      icon.innerHTML = '&uarr;'; // Zmieniamy ikonę na strzałkę do góry
-    });
+   collapseElement.addEventListener('hidden.bs.collapse', function () {
+       icon.classList.remove('icon-up');
+       icon.classList.add('icon-down');
+   });

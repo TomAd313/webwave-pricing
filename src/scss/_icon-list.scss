@@ -65,3 +65,23 @@
   background-repeat: no-repeat;
   background-position: center;
 }
+
+.icon-down {
+  display: inline-block;
+  width: 1em; /* Ustaw szerokość ikony */
+  height: 1em; /* Ustaw wysokość ikony */
+  background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="%231A1E29"%3E%3Cpath d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z"/%3E%3C/svg%3E');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.icon-up {
+  display: inline-block;
+  width: 1em; /* Ustaw szerokość ikony */
+  height: 1em; /* Ustaw wysokość ikony */
+  background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="%231A1E29"%3E%3Cpath d="M480-528 296-344l-56-56 240-240 240 240-56 56-184-184Z"/%3E%3C/svg%3E');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
