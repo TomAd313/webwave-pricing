@@ -81,7 +81,11 @@
 //
 
 body {
+  @extend .m-auto;
+
   padding: 1.5rem;
+  max-width: 1200px;
+  
 }
 
 .container {

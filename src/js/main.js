@@ -1,71 +1,101 @@
 // Import our custom CSS
-import '../scss/styles.scss';
+import "../scss/styles.scss";
 
 // Import only the Bootstrap components we need
-import { Tooltip } from 'bootstrap';
+import { Tooltip } from "bootstrap";
 //import { Popover } from 'bootstrap';
 
+document.addEventListener("DOMContentLoaded", function () {
+  const tooltipTriggerList = document.querySelectorAll(
+    '[data-bs-toggle="tooltip"]'
+  );
 
-document.addEventListener('DOMContentLoaded', function() {
-  const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-
-  tooltipTriggerList.forEach(tooltipTriggerEl => {
+  tooltipTriggerList.forEach((tooltipTriggerEl) => {
     new Tooltip(tooltipTriggerEl); // Inicjalizacja każdego tooltipu
   });
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+  const priceConversionSwitch = document.getElementById(
+    "priceConversionSwitch"
+  );
 
-  document.addEventListener("DOMContentLoaded", function () {
-    const priceConversionSwitch = document.getElementById("priceConversionSwitch");
-  
-    function updatePriceDisplay() {
-      const isChecked = priceConversionSwitch.checked;
-      const priceElements = document.querySelectorAll(".priceConversionDisplay");
-  
-      priceElements.forEach(element => {
-        const monthlyElement = element.querySelector('[data-conversion-type="monthly"]');
-        const annualElement = element.querySelector('[data-conversion-type="annual"]');
-  
-        if (isChecked) {
-          if (monthlyElement) {
-            monthlyElement.style.display = "none";  // Pokaż
-          }
-          if (annualElement) {
-            annualElement.style.display = "block";   // Ukryj
-          }
-        } else {
-          if (monthlyElement) {
-            monthlyElement.style.display = "block";  // Ukryj
-          }
-          if (annualElement) {
-            annualElement.style.display = "none";  // Pokaż
-          }
+  function updatePriceDisplay() {
+    const isChecked = priceConversionSwitch.checked;
+    const priceElements = document.querySelectorAll(".priceConversionDisplay");
+
+    priceElements.forEach((element) => {
+      const monthlyElement = element.querySelector(
+        '[data-conversion-type="monthly"]'
+      );
+      const annualElement = element.querySelector(
+        '[data-conversion-type="annual"]'
+      );
+
+      if (isChecked) {
+        if (monthlyElement) {
+          monthlyElement.style.display = "none"; // Pokaż
         }
-      });
-    }
-  
-    // Nasłuchuje na zmianę stanu checkboxa
-    priceConversionSwitch.addEventListener("change", updatePriceDisplay);
-  
-    // Initial call to set the correct display based on the initial state
-    updatePriceDisplay();
-  });
+        if (annualElement) {
+          annualElement.style.display = "block"; // Ukryj
+        }
+      } else {
+        if (monthlyElement) {
+          monthlyElement.style.display = "block"; // Ukryj
+        }
+        if (annualElement) {
+          annualElement.style.display = "none"; // Pokaż
+        }
+      }
+    });
+  }
 
+  // Nasłuchuje na zmianę stanu checkboxa
+  priceConversionSwitch.addEventListener("change", updatePriceDisplay);
 
+  // Initial call to set the correct display based on the initial state
+  updatePriceDisplay();
+});
 
+// Przyciski i ikony
+const button = document.getElementById("comparisonTableButton");
+const icon = button.querySelector(".icon");
+const collapseElement = document.getElementById("comparisonTable");
 
-   // Przyciski i ikony
-   const button = document.getElementById('comparisonTableButton');
-   const icon = button.querySelector('.icon');
-   const collapseElement = document.getElementById('comparisonTable');
+// Dodanie event listenera dla zdarzeń 'show' i 'hide' dla elementu collapse
+collapseElement.addEventListener("show.bs.collapse", function () {
+  icon.classList.remove("icon-down");
+  icon.classList.add("icon-up");
+});
 
-   // Dodanie event listenera dla zdarzeń 'show' i 'hide' dla elementu collapse
-   collapseElement.addEventListener('show.bs.collapse', function () {
-       icon.classList.remove('icon-down');
-       icon.classList.add('icon-up');
-   });
+collapseElement.addEventListener("hidden.bs.collapse", function () {
+  icon.classList.remove("icon-up");
+  icon.classList.add("icon-down");
+});
 
-   collapseElement.addEventListener('hidden.bs.collapse', function () {
-       icon.classList.remove('icon-up');
-       icon.classList.add('icon-down');
-   });
+// Wybierz przycisk z ID "buyPlan1Button"
+const buyPlan1Button = document.getElementById('buyPlan1Button');
+
+// Dodaj event listener na kliknięcie
+buyPlan1Button.addEventListener('click', function() {
+    // Wyświetl alert po naciśnięciu przycisku
+    alert('Kupiłeś Plan 1');
+});
+
+// Wybierz przycisk z ID "buyPlan1Button"
+const buyPlan2Button = document.getElementById('buyPlan2Button');
+
+// Dodaj event listener na kliknięcie
+buyPlan2Button.addEventListener('click', function() {
+    // Wyświetl alert po naciśnięciu przycisku
+    alert('Kupiłeś Plan 2');
+});
+
+// Wybierz przycisk z ID "buyPlan1Button"
+const buyPlan3Button = document.getElementById('buyPlan3Button');
+
+// Dodaj event listener na kliknięcie
+buyPlan3Button.addEventListener('click', function() {
+    // Wyświetl alert po naciśnięciu przycisku
+    alert('Kupiłeś Plan 3');
+});
