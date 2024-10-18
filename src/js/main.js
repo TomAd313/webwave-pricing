@@ -3,7 +3,6 @@ import "../scss/styles.scss";
 
 // Import only the Bootstrap components we need
 import { Tooltip } from "bootstrap";
-//import { Popover } from 'bootstrap';
 
 document.addEventListener("DOMContentLoaded", function () {
   const tooltipTriggerList = document.querySelectorAll(
@@ -13,89 +12,168 @@ document.addEventListener("DOMContentLoaded", function () {
   tooltipTriggerList.forEach((tooltipTriggerEl) => {
     new Tooltip(tooltipTriggerEl); // Inicjalizacja każdego tooltipu
   });
-});
 
-document.addEventListener("DOMContentLoaded", function () {
-  const priceConversionSwitch = document.getElementById(
-    "priceConversionSwitch"
-  );
+  const priceSwitch = document.getElementById("priceConversionSwitch");
 
   function updatePriceDisplay() {
-    const isChecked = priceConversionSwitch.checked;
-    const priceElements = document.querySelectorAll(".priceConversionDisplay");
+    const isChecked = priceSwitch.checked;
 
-    priceElements.forEach((element) => {
-      const monthlyElement = element.querySelector(
-        '[data-conversion-type="monthly"]'
-      );
-      const annualElement = element.querySelector(
-        '[data-conversion-type="annual"]'
-      );
+    document.querySelectorAll(".container-price").forEach((container) => {
+      const containerPlan = container.closest(".container-plan");
 
       if (isChecked) {
-        if (monthlyElement) {
-          monthlyElement.style.display = "none"; // Pokaż
-        }
-        if (annualElement) {
-          annualElement.style.display = "block"; // Ukryj
+        if (container.dataset.priceBillingType === "monthly") {
+          container.style.display = "none";
+        } else {
+          container.style.display = "block";
+
+          // Aktualizacja data-price-billing-selected
+          if (containerPlan) {
+            containerPlan.dataset.priceBillingSelected = "annual";
+          }
         }
       } else {
-        if (monthlyElement) {
-          monthlyElement.style.display = "block"; // Ukryj
-        }
-        if (annualElement) {
-          annualElement.style.display = "none"; // Pokaż
+        if (container.dataset.priceBillingType === "monthly") {
+          container.style.display = "block";
+
+          // Aktualizacja data-price-billing-selected
+          if (containerPlan) {
+            containerPlan.dataset.priceBillingSelected = "monthly";
+          }
+        } else {
+          container.style.display = "none";
         }
       }
     });
   }
 
-  // Nasłuchuje na zmianę stanu checkboxa
-  priceConversionSwitch.addEventListener("change", updatePriceDisplay);
+  priceSwitch.addEventListener("change", updatePriceDisplay);
+  updatePriceDisplay(); // initial call to set the correct display
 
-  // Initial call to set the correct display based on the initial state
-  updatePriceDisplay();
-});
+  // Przyciski i ikony
+  const button = document.getElementById("comparisonTableButton");
+  const icon = button.querySelector(".icon");
+  const collapseElement = document.getElementById("comparisonTable");
 
-// Przyciski i ikony
-const button = document.getElementById("comparisonTableButton");
-const icon = button.querySelector(".icon");
-const collapseElement = document.getElementById("comparisonTable");
+  // Dodanie event listenera dla zdarzeń 'show' i 'hide' dla elementu collapse
+  collapseElement.addEventListener("show.bs.collapse", function () {
+    icon.classList.remove("icon-down");
+    icon.classList.add("icon-up");
+  });
 
-// Dodanie event listenera dla zdarzeń 'show' i 'hide' dla elementu collapse
-collapseElement.addEventListener("show.bs.collapse", function () {
-  icon.classList.remove("icon-down");
-  icon.classList.add("icon-up");
-});
+  collapseElement.addEventListener("hidden.bs.collapse", function () {
+    icon.classList.remove("icon-up");
+    icon.classList.add("icon-down");
+  });
 
-collapseElement.addEventListener("hidden.bs.collapse", function () {
-  icon.classList.remove("icon-up");
-  icon.classList.add("icon-down");
-});
+  const url = "https://webwavecms.com/webwaveWebsites/getPricingDataForUser";
 
-// Wybierz przycisk z ID "buyPlan1Button"
-const buyPlan1Button = document.getElementById('buyPlan1Button');
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+      const currentPlanLevel = data.currentPlanLevel;
 
-// Dodaj event listener na kliknięcie
-buyPlan1Button.addEventListener('click', function() {
-    // Wyświetl alert po naciśnięciu przycisku
-    alert('Kupiłeś Plan 1');
-});
+      // Mapa symboli i pozycji walut
+      const currencyFormats = {
+        USD: { symbol: '$', position: 'before' },
+        AUD: { symbol: '$', position: 'before' },
+        PLN: { symbol: 'zł', position: 'after' },
+        EUR: { symbol: '€', position: 'before' },
+        RON: { symbol: 'lei', position: 'after' },
+        GBP: { symbol: '£', position: 'before' },
+      };
 
-// Wybierz przycisk z ID "buyPlan1Button"
-const buyPlan2Button = document.getElementById('buyPlan2Button');
+      // Funkcja do formatowania ceny z walutą
+      function formatPrice(value, currency) {
+        const { symbol, position } = currencyFormats[currency] || {};
+        if (!symbol) return `${value} ${currency}`; // Domyślne dla nieznanej waluty
 
-// Dodaj event listener na kliknięcie
-buyPlan2Button.addEventListener('click', function() {
-    // Wyświetl alert po naciśnięciu przycisku
-    alert('Kupiłeś Plan 2');
-});
+        switch (position) {
+          case 'before':
+            return `${symbol}${value}`; // Symbol przed wartością
+          case 'after':
+            return `${value} ${symbol}`; // Symbol po wartości
+          case 'top':
+            return `<sup>${symbol}</sup>${value}`; // Symbol na górze
+          case 'bottom':
+            return `${value}<sub>${symbol}</sub>`; // Symbol na dole
+          default:
+            return `${value} ${currency}`; // Domyślne, jeśli pozycji nie określono
+        }
+      }
 
-// Wybierz przycisk z ID "buyPlan1Button"
-const buyPlan3Button = document.getElementById('buyPlan3Button');
+      // Pętla po wszystkich planach
+      data.plans.forEach((plan) => {
+        const planLevel = plan.level;
+        const planName = plan.planName;
+        const priceFor12Month = plan.priceFor12Month;
+        const defaultPriceForPlan = plan.defaultPriceForPlan;
+        const currency = data.currency;
 
-// Dodaj event listener na kliknięcie
-buyPlan3Button.addEventListener('click', function() {
-    // Wyświetl alert po naciśnięciu przycisku
-    alert('Kupiłeś Plan 3');
+
+        const containerPlan = document.querySelector(
+          `[data-plan-level="${planLevel}"]`
+        );
+
+        if (containerPlan) {
+          // Ustawianie nazw i cen
+          containerPlan.querySelector(".plan-name").innerHTML = planName;
+
+          // Zmiana cen w odpowiednich kontenerach
+          const monthlyPriceContainer = containerPlan.querySelector(
+            '[data-price-billing-type="monthly"] .price-value'
+          );
+          const annualPriceContainer = containerPlan.querySelector(
+            '[data-price-billing-type="annual"] .price-value'
+          );
+
+          if (monthlyPriceContainer) {
+            monthlyPriceContainer.innerHTML = formatPrice(priceFor12Month, currency);
+          }
+
+          if (annualPriceContainer) {
+            annualPriceContainer.innerHTML = formatPrice(defaultPriceForPlan, currency);
+          }
+
+          // Ustawianie widoczności i wyróżnienia
+          const parentCol = containerPlan.closest('.col'); // Znajdź rodzica `.col` dla danego `containerPlan`
+
+          if (parentCol) { // Sprawdź, czy element `.col` istnieje
+            if (containerPlan.dataset.planLevel === currentPlanLevel) {
+              containerPlan.dataset.active = "true";
+              parentCol.style.display = ""; // Pokaż element dla wyróżnionego planu
+            } else if (containerPlan.dataset.planLevel < currentPlanLevel) {
+              parentCol.style.display = "none"; // Ukryj element `.col` dla planów poniżej poziomu
+            } else {
+              parentCol.style.display = ""; // Upewnij się, że inne elementy nie są ukrywane
+            }
+          } else {
+            console.error('Brak elementu rodzica .col dla tego kontenera');
+          }
+
+          // Nasłuchuj kliknięcia przycisku zakupu
+          document.querySelectorAll(".button-buy-plan").forEach((button) => {
+            button.addEventListener("click", function () {
+              // Znajdź kontener planu dla tego przycisku
+              const planContainer = this.closest(
+                ".container-plan[data-plan-level]"
+              );
+              if (planContainer) {
+                // Odczyt danych z kontenera
+                const planLevel = planContainer.dataset.planLevel;
+                const billingType = planContainer.dataset.priceBillingSelected; // Oczekujemy, że zawiera wybraną opcję 'monthly' lub 'annual'
+
+                // Aktualizacja URL
+                const newUrl = `${window.location.protocol}//${window.location.host}${window.location.pathname}?planLevel=${planLevel}&billingType=${billingType}`;
+                window.history.pushState({ path: newUrl }, "", newUrl);
+              } else {
+                console.error(
+                  "Brak elementu .container-plan z odpowiednim data-plan-level"
+                );
+              }
+            });
+          });
+        }
+      });
+    });
 });

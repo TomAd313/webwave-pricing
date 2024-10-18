@@ -112,9 +112,6 @@ header {
 
     }
 
-
-
-
   }
 
 
@@ -129,7 +126,13 @@ main {
     @extend .text-center;
   }
 
+}
 
+
+.container-switch-billing-type {
+  .col:first-child {
+    @extend .justify-content-end;
+  }
 }
 
 .form-switch {
@@ -146,7 +149,6 @@ small {
 .badge {
   @extend .bg-success;
 }
-
 
 
 .pricing-header {
@@ -218,6 +220,8 @@ small {
 
   }
 
+  
+
   .card-body {
 
     @extend .p-3;
@@ -227,6 +231,12 @@ small {
 
     h1 {
       @extend .m-0;
+    }
+
+    .card-title {
+     small {
+        font-size: $font-size-base;
+      }
     }
 
   }
