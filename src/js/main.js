@@ -75,12 +75,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Mapa symboli i pozycji walut
       const currencyFormats = {
-        USD: { symbol: '$', position: 'before' },
-        AUD: { symbol: '$', position: 'before' },
-        PLN: { symbol: 'zł', position: 'after' },
-        EUR: { symbol: '€', position: 'before' },
-        RON: { symbol: 'lei', position: 'after' },
-        GBP: { symbol: '£', position: 'before' },
+        USD: { symbol: "$", position: "before" },
+        AUD: { symbol: "$", position: "before" },
+        PLN: { symbol: "zł", position: "after" },
+        EUR: { symbol: "€", position: "before" },
+        RON: { symbol: "lei", position: "after" },
+        GBP: { symbol: "£", position: "before" },
       };
 
       // Funkcja do formatowania ceny z walutą
@@ -89,13 +89,13 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!symbol) return `${value} ${currency}`; // Domyślne dla nieznanej waluty
 
         switch (position) {
-          case 'before':
+          case "before":
             return `${symbol}${value}`; // Symbol przed wartością
-          case 'after':
+          case "after":
             return `${value} ${symbol}`; // Symbol po wartości
-          case 'top':
+          case "top":
             return `<sup>${symbol}</sup>${value}`; // Symbol na górze
-          case 'bottom':
+          case "bottom":
             return `${value}<sub>${symbol}</sub>`; // Symbol na dole
           default:
             return `${value} ${currency}`; // Domyślne, jeśli pozycji nie określono
@@ -106,10 +106,10 @@ document.addEventListener("DOMContentLoaded", function () {
       data.plans.forEach((plan) => {
         const planLevel = plan.level;
         const planName = plan.planName;
-        const priceFor12Month = plan.priceFor12Month;
+        //const priceFor12Month = plan.priceFor12Month;
+        const priceFor12Month = Math.round((plan.priceFor12Month / 12) * 0.75); //Fikcyjna promocja (du usinięcia)
         const defaultPriceForPlan = plan.defaultPriceForPlan;
         const currency = data.currency;
-
 
         const containerPlan = document.querySelector(
           `[data-plan-level="${planLevel}"]`
@@ -128,17 +128,24 @@ document.addEventListener("DOMContentLoaded", function () {
           );
 
           if (monthlyPriceContainer) {
-            monthlyPriceContainer.innerHTML = formatPrice(priceFor12Month, currency);
+            monthlyPriceContainer.innerHTML = formatPrice(
+              defaultPriceForPlan,
+              currency
+            );
           }
 
           if (annualPriceContainer) {
-            annualPriceContainer.innerHTML = formatPrice(defaultPriceForPlan, currency);
+            annualPriceContainer.innerHTML = formatPrice(
+              priceFor12Month,
+              currency
+            );
           }
 
           // Ustawianie widoczności i wyróżnienia
-          const parentCol = containerPlan.closest('.col'); // Znajdź rodzica `.col` dla danego `containerPlan`
+          const parentCol = containerPlan.closest(".col"); // Znajdź rodzica `.col` dla danego `containerPlan`
 
-          if (parentCol) { // Sprawdź, czy element `.col` istnieje
+          if (parentCol) {
+            // Sprawdź, czy element `.col` istnieje
             if (containerPlan.dataset.planLevel === currentPlanLevel) {
               containerPlan.dataset.active = "true";
               parentCol.style.display = ""; // Pokaż element dla wyróżnionego planu
@@ -148,7 +155,7 @@ document.addEventListener("DOMContentLoaded", function () {
               parentCol.style.display = ""; // Upewnij się, że inne elementy nie są ukrywane
             }
           } else {
-            console.error('Brak elementu rodzica .col dla tego kontenera');
+            console.error("Brak elementu rodzica .col dla tego kontenera");
           }
 
           // Nasłuchuj kliknięcia przycisku zakupu
@@ -164,8 +171,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 const billingType = planContainer.dataset.priceBillingSelected; // Oczekujemy, że zawiera wybraną opcję 'monthly' lub 'annual'
 
                 // Aktualizacja URL
-                const newUrl = `${window.location.protocol}//${window.location.host}${window.location.pathname}?planLevel=${planLevel}&billingType=${billingType}`;
-                window.history.pushState({ path: newUrl }, "", newUrl);
+                window.location.hash = `planLevel=${planLevel}&billingType=${billingType}`;
               } else {
                 console.error(
                   "Brak elementu .container-plan z odpowiednim data-plan-level"
