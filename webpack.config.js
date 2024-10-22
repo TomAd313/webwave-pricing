@@ -47,6 +47,10 @@ module.exports = {
         ],
       },
       {
+        test: /\.html$/i,
+        loader: 'html-loader',
+      },
+      {
         test: /\.(woff|woff2|eot|ttf|otf)$/, // Obsługa plików czcionek
         type: 'asset/resource', // Korzystamy z wbudowanego asset/resource do obsługi czcionek
         generator: {

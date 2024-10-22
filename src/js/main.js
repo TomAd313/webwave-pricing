@@ -1,10 +1,17 @@
 // Import our custom CSS
 import "../scss/styles.scss";
 
+import pricingTemplate from "../pricing.html"; // Ścieżka do lokalnego pliku HTML
+
 // Import only the Bootstrap components we need
 import { Tooltip } from "bootstrap";
 
+
 document.addEventListener("DOMContentLoaded", function () {
+
+  // Osadź dynamiczny HTML
+  document.getElementById("root").innerHTML = pricingTemplate;
+
   const tooltipTriggerList = document.querySelectorAll(
     '[data-bs-toggle="tooltip"]'
   );
