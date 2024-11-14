@@ -74,7 +74,11 @@ export function initPricingTable(containerId) {
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
-        const currentPlanLevel = data.currentPlanLevel;
+
+        const currentPlanLevel = data.currentPlanLevel; //Zmienna z JSON 
+
+
+
 
         const currencyFormats = {
           USD: { symbol: "$", position: "before" },
@@ -99,12 +103,12 @@ export function initPricingTable(containerId) {
           }
         }
 
-        data.plans.forEach((plan) => {
-          const planLevel = plan.level;
-          const planName = plan.planName;
-          const priceFor12Month = Math.round((plan.priceFor12Month / 12) * 0.75);
-          const defaultPriceForPlan = plan.defaultPriceForPlan;
-          const currency = data.currency;
+        data.plans.forEach((plan) => {      //Zmienna z JSON 
+          const planLevel = plan.level;     //Zmienna z JSON 
+          const planName = plan.planName;   //Zmienna z JSON 
+          const priceFor12Month = Math.round((plan.priceFor12Month / 12) * 0.75);   //Zmienna z JSON 
+          const defaultPriceForPlan = plan.defaultPriceForPlan;   //Zmienna z JSON 
+          const currency = data.currency;   //Zmienna z JSON 
 
           const containerPlan = document.querySelector(
             `[data-plan-level="${planLevel}"]`
