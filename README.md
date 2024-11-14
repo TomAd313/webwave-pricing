@@ -1,6 +1,6 @@
 # WebWave - Pricing
 
-WebWave - Pricing to projekt strony internetowej, który umożliwia użytkownikom przeglądanie i wybieranie planów cenowych z różnymi opcjami rozliczeń. Strona zawiera dynamiczne elementy, takie jak tooltipy i przełączniki cenowe.
+WebWave - Pricing to projekt strony internetowej prezentującej plany cenowe z różnymi opcjami rozliczeń. Strona wykorzystuje dynamiczne elementy, takie jak tooltipy i przełączniki cenowe.
 
 ## Technologie
 
@@ -25,10 +25,16 @@ WebWave - Pricing to projekt strony internetowej, który umożliwia użytkowniko
    npm install
    ```
 
-3. Uruchom projekt lokalnie:
+3. Uruchom lokalny serwer developerski:
 
    ```bash
    npm start
+   ```
+
+4. Zbuduj projekt:
+
+   ```bash
+   npm run build
    ```
 
 ## Struktura projektu
@@ -47,19 +53,42 @@ webwave-pricing/
 
 ## Funkcjonalności
 
-- **Przełączanie Wyświetlania Cen**: Użytkownicy mogą przełączać się między miesięcznymi a rocznymi planami za pomocą checkboxa `Miesięczne/Roczne`.
+- **Przełączanie Wyświetlania Cen**: Użytkownicy mogą przełączać się między miesięcznymi a rocznymi planami cenowymi.
 - **Tooltipy**: Informacje dostępne są przez tooltipy na ikonach informacji.
-- **Interaktywne Przycisk Wybierające Plan**: Kliknięcie w przycisk "Wybierz" pokazuje alert z potwierdzeniem wybranego planu.
+- **Interaktywne Przycisk Wybierający Plan**: Kliknięcie w przycisk "Wybierz" wyświetla alert z potwierdzeniem wybranego planu.
 
 ## Zmienne i Konfiguracja
 
-- Dynamiczne dodawanie parametrów do URL obsługiwane przez JavaScript:
-  ```javascript
-  function appendParamsToUrl(url, params) {
-    // Kod obsługujący dodawanie parametrów
-  }
-  ```
-- Przykład użycia tej funkcji dostępny jest w pliku JS.
+- Dynamiczne dodawanie parametrów do URL obsługiwane przez JavaScript.
+
+## Sposób integracji
+
+Projekt jest skonfigurowany do tworzenia modułu, który można zintegrować na innej stronie. Skompilowany plik znajdziesz w katalogu `dist`.
+
+### Integracja w HTML
+
+Aby zintegrować tabelę ceny z inną stroną, wstaw poniższy kod do swojego dokumentu HTML:
+
+```html
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moduł Cennika</title>
+</head>
+<body>
+    <!-- Kontener, w którym będzie osadzona tabela cenowa -->
+    <div id="pricingTable"></div>
+
+    <!-- Osadzenie skryptu modułu -->
+    <script src="path/to/pricingModule.bundle.js"></script>
+    <script>
+      PricingModule.initPricingTable('pricingTable');
+    </script>
+</body>
+</html>
+```
 
 ## Przyszłe Plany
 
@@ -69,8 +98,3 @@ webwave-pricing/
 ## Wkład
 
 Jesteśmy otwarci na sugestie i wkład. Jeśli chcesz dodać coś do projektu, otwórz zgłoszenie (issue) lub zrób pull request.
-
-## Kontakt
-
-- Autor: Tomasz Adamiak
-- Email: [email@example.com](mailto:email@example.com)
