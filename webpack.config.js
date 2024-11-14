@@ -1,40 +1,44 @@
-'use strict';
-
 const path = require('path');
 const autoprefixer = require('autoprefixer');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  mode: 'development',
+  mode: process.env.NODE_ENV || 'development',
   entry: './src/js/main.js',
   output: {
-    filename: '[name].js',
+    filename: 'pricingModule.bundle.js',
     path: path.resolve(__dirname, 'dist'),
     clean: true,
+    library: 'PricingModule',  // Nazwa modułu jako zmienna globalna
+    libraryTarget: 'umd',     // Universal Module Definition
+    globalObject: 'this'      // Dla zgodności z przeglądarką i Node.js
   },
   devServer: {
-    watchFiles: ['src/**/*'], // Obserwuj zmiany w plikach HTML
-    static: path.resolve(__dirname, 'dist'),
+    static: {
+      directory: path.resolve(__dirname, 'dist'), // To ustawia folder z plikami, które mają być serwowane
+    },
     port: 8080,
     hot: true,
-  },
-  plugins: [
-    new HtmlWebpackPlugin({ template: './src/index.html' }),
-  ],
-  optimization: {
-    splitChunks: {
-      chunks: 'all',
+    historyApiFallback: {
+      index: 'index.html' // To oznacza, że każda nawigacja powinna wracać do index.html
     },
   },
+  plugins: [
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: 'src/index.html', to: 'index.html' },
+      ],
+    }),
+  ],
   module: {
     rules: [
       {
         test: /\.(scss)$/,
         use: [
-          'style-loader', // Adds CSS to the DOM by injecting a `<style>` tag
-          'css-loader', // Translates CSS into CommonJS
+          'style-loader',
+          'css-loader',
           {
-            loader: 'postcss-loader', // Loader for webpack to process CSS with PostCSS
+            loader: 'postcss-loader',
             options: {
               postcssOptions: {
                 plugins: () => [
@@ -43,7 +47,7 @@ module.exports = {
               },
             },
           },
-          'sass-loader', // Compiles Sass to CSS
+          'sass-loader',
         ],
       },
       {
@@ -51,10 +55,10 @@ module.exports = {
         loader: 'html-loader',
       },
       {
-        test: /\.(woff|woff2|eot|ttf|otf)$/, // Obsługa plików czcionek
-        type: 'asset/resource', // Korzystamy z wbudowanego asset/resource do obsługi czcionek
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        type: 'asset/resource',
         generator: {
-          filename: 'fonts/[name][ext]', // Określanie katalogu docelowego i nazwy plików czcionek w katalogu `dist/fonts`
+          filename: 'fonts/[name][ext]',
         },
       },
     ],

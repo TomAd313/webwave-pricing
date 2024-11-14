@@ -1,12 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your App</title>
-</head>
-<body>
-    <div id="root"></div>
-    <script src="js/main.js"></script> <!-- upewnij się, że ścieżka do JS jest poprawna -->
-</body>
-</html>
+   <html lang="pl">
+   <head>
+       <meta charset="UTF-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <title>Moduł Cennika</title>
+   </head>
+   <body>
+       <!-- Kontener, w którym będzie osadzona tabela cenowa -->
+       <div id="pricingTable"></div>
+
+       <!-- Osadzenie skryptu modułu -->
+       <script src="pricingModule.bundle.js"></script>
+       <script>
+         // Użyj obiektu globalnego 'PricingModule'
+         PricingModule.initPricingTable('pricingTable');
+       </script>
+   </body>
+   </html>
