@@ -2,9 +2,9 @@
 import "../scss/styles.scss";
 import pricingTemplate from "../pricing.html";
 import { Tooltip } from "bootstrap";
+import translations from './translations.js';
 
-// Eksportowanie funkcji inicjalizacyjnej
-export function initPricingTable(containerId) {
+export function initPricingTable(containerId, lang) {
   document.addEventListener("DOMContentLoaded", function () {
     const container = document.getElementById(containerId);
     if (!container) {
@@ -14,7 +14,10 @@ export function initPricingTable(containerId) {
 
     container.innerHTML = pricingTemplate;
 
-    const tooltipTriggerList = document.querySelectorAll(
+    // Filtruj i stosuj tłumaczenia tylko dla bieżącego kontenera
+    applyTranslations(container, lang);
+
+    const tooltipTriggerList = container.querySelectorAll(
       '[data-bs-toggle="tooltip"]'
     );
 
@@ -22,12 +25,19 @@ export function initPricingTable(containerId) {
       new Tooltip(tooltipTriggerEl);
     });
 
-    const priceSwitch = document.getElementById("priceConversionSwitch");
+    const priceSwitch = container.querySelector("#priceConversionSwitch");
+
+    if (priceSwitch) {
+      priceSwitch.addEventListener("change", updatePriceDisplay);
+      updatePriceDisplay();
+  } else {
+      console.error("Nie znaleziono elementu #priceConversionSwitch w kontenerze");
+  }
 
     function updatePriceDisplay() {
       const isChecked = priceSwitch.checked;
 
-      document.querySelectorAll(".container-price").forEach((container) => {
+      container.querySelectorAll(".container-price").forEach((container) => {
         const containerPlan = container.closest(".container-plan");
 
         if (isChecked) {
@@ -55,30 +65,35 @@ export function initPricingTable(containerId) {
     priceSwitch.addEventListener("change", updatePriceDisplay);
     updatePriceDisplay();
 
-    const button = document.getElementById("comparisonTableButton");
-    const icon = button.querySelector(".icon");
-    const collapseElement = document.getElementById("comparisonTable");
+    const button = container.querySelector("#comparisonTableButton");
 
-    collapseElement.addEventListener("show.bs.collapse", function () {
-      icon.classList.remove("icon-down");
-      icon.classList.add("icon-up");
-    });
-
-    collapseElement.addEventListener("hidden.bs.collapse", function () {
-      icon.classList.remove("icon-up");
-      icon.classList.add("icon-down");
-    });
+    if (button) {
+        const icon = button.querySelector(".icon");
+        const collapseElement = container.querySelector("#comparisonTable");
+    
+        if (collapseElement) {
+            collapseElement.addEventListener("show.bs.collapse", function () {
+                icon.classList.remove("icon-down");
+                icon.classList.add("icon-up");
+            });
+    
+            collapseElement.addEventListener("hidden.bs.collapse", function () {
+                icon.classList.remove("icon-up");
+                icon.classList.add("icon-down");
+            });
+        } else {
+            console.error("Nie znaleziono elementu #comparisonTable w kontenerze");
+        }
+    } else {
+        console.error("Nie znaleziono elementu #comparisonTableButton w kontenerze");
+    }
 
     const url = "https://webwavecms.com/webwaveWebsites/getPricingDataForUser";
 
     fetch(url)
-      .then((response) => response.json())
+      .then(response => response.json())
       .then((data) => {
-
-        const currentPlanLevel = data.currentPlanLevel; //Zmienna z JSON 
-
-
-
+        const currentPlanLevel = data.currentPlanLevel;
 
         const currencyFormats = {
           USD: { symbol: "$", position: "before" },
@@ -103,14 +118,14 @@ export function initPricingTable(containerId) {
           }
         }
 
-        data.plans.forEach((plan) => {      //Zmienna z JSON 
-          const planLevel = plan.level;     //Zmienna z JSON 
-          const planName = plan.planName;   //Zmienna z JSON 
-          const priceFor12Month = Math.round((plan.priceFor12Month / 12) * 0.75);   //Zmienna z JSON 
-          const defaultPriceForPlan = plan.defaultPriceForPlan;   //Zmienna z JSON 
-          const currency = data.currency;   //Zmienna z JSON 
+        data.plans.forEach((plan) => {
+          const planLevel = plan.level;
+          const planName = plan.planName;
+          const priceFor12Month = Math.round((plan.priceFor12Month / 12) * 0.75);
+          const defaultPriceForPlan = plan.defaultPriceForPlan;
+          const currency = data.currency;
 
-          const containerPlan = document.querySelector(
+          const containerPlan = container.querySelector(
             `[data-plan-level="${planLevel}"]`
           );
 
@@ -151,7 +166,7 @@ export function initPricingTable(containerId) {
               }
             }
 
-            document.querySelectorAll(".button-buy-plan").forEach((button) => {
+            container.querySelectorAll(".button-buy-plan").forEach((button) => {
               button.addEventListener("click", function () {
                 const planContainer = this.closest(
                   ".container-plan[data-plan-level]"
@@ -169,4 +184,20 @@ export function initPricingTable(containerId) {
         });
       });
   });
+}
+
+function applyTranslations(container, lang) {
+  console.log(`Applying translations for language: ${lang}`);
+  if (translations && translations[lang]) {
+    container.querySelectorAll('[data-translate]').forEach(element => {
+      const key = element.getAttribute('data-translate');
+      if (translations[lang][key]) {
+        element.textContent = translations[lang][key];
+      } else {
+        console.warn(`Translation key '${key}' not found in language '${lang}'`);
+      }
+    });
+  } else {
+    console.error('Translations not found for the selected language.');
+  }
 }

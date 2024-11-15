@@ -7,13 +7,17 @@
    </head>
    <body>
        <!-- Kontener, w którym będzie osadzona tabela cenowa -->
-       <div id="pricingTable"></div>
+       <div id="pricingTablePL"></div>
+       <div id="pricingTableEN"></div>
+       <div id="pricingTableRO"></div>
 
        <!-- Osadzenie skryptu modułu -->
        <script src="pricingModule.bundle.js"></script>
        <script>
          // Użyj obiektu globalnego 'PricingModule'
-         PricingModule.initPricingTable('pricingTable');
+         PricingModule.initPricingTable('pricingTablePL', 'PL');
+         PricingModule.initPricingTable('pricingTableEN', 'EN');
+         PricingModule.initPricingTable('pricingTableRO', 'RO');
        </script>
    </body>
    </html>
