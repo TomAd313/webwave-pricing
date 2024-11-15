@@ -6,6 +6,8 @@
        <title>Tabela z cennikiem</title>
    </head>
    <body>
+
+
        <!-- Kontener, w którym będzie osadzona tabela cenowa -->
        <div id="pricingTablePL"></div>
        <div id="pricingTableEN"></div>
@@ -18,6 +20,9 @@
          PricingModule.initPricingTable('pricingTablePL', 'PL');
          PricingModule.initPricingTable('pricingTableEN', 'EN');
          PricingModule.initPricingTable('pricingTableRO', 'RO');
-       </script>
+   
+        window.addEventListener("hashchange", function () {alert(window.location.hash )});
+  </script>
+
    </body>
    </html>

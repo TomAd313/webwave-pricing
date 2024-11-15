@@ -67,26 +67,35 @@ export function initPricingTable(containerId, lang) {
 
     const button = container.querySelector("#comparisonTableButton");
 
-    if (button) {
-        const icon = button.querySelector(".icon");
-        const collapseElement = container.querySelector("#comparisonTable");
-    
-        if (collapseElement) {
-            collapseElement.addEventListener("show.bs.collapse", function () {
-                icon.classList.remove("icon-down");
-                icon.classList.add("icon-up");
-            });
-    
-            collapseElement.addEventListener("hidden.bs.collapse", function () {
-                icon.classList.remove("icon-up");
-                icon.classList.add("icon-down");
-            });
-        } else {
-            console.error("Nie znaleziono elementu #comparisonTable w kontenerze");
-        }
-    } else {
-        console.error("Nie znaleziono elementu #comparisonTableButton w kontenerze");
-    }
+   if (button) {
+     console.log("Przycisk znaleziony", button);
+     const icon = button.querySelector(".icon");
+     const collapseElement = container.querySelector("#comparisonTable");
+   
+     if (collapseElement) {
+        collapseElement.addEventListener("show.bs.collapse", function () {
+          if (icon) {
+            icon.classList.remove("icon-down");
+            icon.classList.add("icon-up");
+          } else {
+            console.error("Nie znaleziono ikony w przycisku");
+          }
+        });
+   
+        collapseElement.addEventListener("hidden.bs.collapse", function () {
+          if (icon) {
+            icon.classList.remove("icon-up");
+            icon.classList.add("icon-down");
+          } else {
+            console.error("Nie znaleziono ikony w przycisku");
+          }
+        });
+     } else {
+       console.error("Nie znaleziono elementu #comparisonTable w kontenerze");
+     }
+   } else {
+     console.error("Nie znaleziono elementu #comparisonTableButton w kontenerze");
+   }
 
     const url = "https://webwavecms.com/webwaveWebsites/getPricingDataForUser";
 
