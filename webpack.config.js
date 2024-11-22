@@ -9,18 +9,18 @@ module.exports = {
     filename: 'pricingModule.bundle.js',
     path: path.resolve(__dirname, 'dist'),
     clean: true,
-    library: 'PricingModule',  // Nazwa modułu jako zmienna globalna
-    libraryTarget: 'umd',     // Universal Module Definition
-    globalObject: 'this'      // Dla zgodności z przeglądarką i Node.js
+    library: 'PricingModule',
+    libraryTarget: 'umd',
+    globalObject: 'this'
   },
   devServer: {
     static: {
-      directory: path.resolve(__dirname, 'dist'), // To ustawia folder z plikami, które mają być serwowane
+      directory: path.resolve(__dirname, 'dist'),
     },
     port: 8080,
     hot: true,
     historyApiFallback: {
-      index: 'index.html' // To oznacza, że każda nawigacja powinna wracać do index.html
+      index: 'index.html'
     },
   },
   plugins: [
@@ -33,20 +33,28 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(scss)$/,
+        test: /\.module\.scss$/,  // Obsługa CSS Modules
         use: [
           'style-loader',
-          'css-loader',
           {
-            loader: 'postcss-loader',
+            loader: 'css-loader',
             options: {
-              postcssOptions: {
-                plugins: () => [
-                  autoprefixer,
-                ],
+              modules: {
+                localIdentName: '[name]__[local]___[hash:base64:5]',
               },
             },
           },
+          'postcss-loader',
+          'sass-loader',
+        ],
+      },
+      {
+        test: /\.scss$/,
+        exclude: /\.module\.scss$/,  // Standardowe pliki SCSS
+        use: [
+          'style-loader',
+          'css-loader',
+          'postcss-loader',
           'sass-loader',
         ],
       },

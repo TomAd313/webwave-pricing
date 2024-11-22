@@ -4,6 +4,7 @@
        <meta charset="UTF-8">
        <meta name="viewport" content="width=device-width, initial-scale=1.0">
        <title>Tabela z cennikiem</title>
+
    </head>
    <body>
 
@@ -21,7 +22,15 @@
          PricingModule.initPricingTable('pricingTableEN', 'EN');
          PricingModule.initPricingTable('pricingTableRO', 'RO');
    
-        window.addEventListener("hashchange", function () {alert(window.location.hash )});
+        //window.addEventListener("hashchange", function () {alert(window.location.hash )});
+
+        document.addEventListener('pricing-module-plan-selected', function (event) {
+            console.log('Plan has been selected:', event.detail);
+            // Tutaj można dodać logikę do obsługi wydarzenia,
+            // np. zapisywanie w bazie danych, logowanie analityczne itp.
+        });
+
+
   </script>
 
    </body>
