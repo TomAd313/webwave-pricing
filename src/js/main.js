@@ -60,42 +60,52 @@ export function initPricingTable(containerId, lang) {
 
   if (button) {
     const icon = button.querySelector(".icon");
+    if (icon) {
+      icon.classList.add(styles["icon-down"]);
+    }
 
     const collapseElement = container.querySelector("#comparisonTable");
+    if (collapseElement) {
+      collapseElement.classList.add(styles["collapse"]);
+    
+      collapseElement.addEventListener("show.bs.collapse", () => {
+        collapseElement.classList.add(styles["collapsing"]);
+        collapseElement.classList.remove(styles["collapse"]);
+        collapseElement.style.height = null; // Resetowanie wysokości na auto
 
-if (collapseElement) {
-  // Kiedy element jest w trakcie przesunięcia na widoczny stan
-  collapseElement.addEventListener("show.bs.collapse", () => {
-    collapseElement.classList.add('collapsing'); // Dodaj klasę collapsing
-  });
+        if (icon) {
+          icon.classList.replace(styles["icon-down"], styles["icon-up"]);
+        }
+      });
+    
+      collapseElement.addEventListener("shown.bs.collapse", () => {
+        collapseElement.classList.remove(styles["collapsing"]);
+        collapseElement.classList.add(styles["show"]);
+        collapseElement.style.height = 'auto'; // Przypisanie wysokości auto
 
-  // Po zakończeniu stanu przejścia i całkowitym rozwinięciu
-  collapseElement.addEventListener("shown.bs.collapse", () => {
-    collapseElement.classList.remove('collapsing'); // Usuń klasę collapsing
-    collapseElement.classList.add(styles["show"]);  // Dodaj klasę show z CSS Modules
-    if (icon) {
-      icon.classList.replace("icon-down", "icon-up");
-    } else {
-      console.error("Nie znaleziono ikony w przycisku");
+
+
+      });
+    
+      collapseElement.addEventListener("hide.bs.collapse", () => {
+        collapseElement.classList.add(styles["collapsing"]);
+        collapseElement.classList.remove(styles["show"]);
+        collapseElement.style.height = `${collapseElement.scrollHeight}px`; // Obliczanie animacji w przeciwnym kierunku
+
+        if (icon) {
+          icon.classList.replace(styles["icon-up"], styles["icon-down"]);
+        }
+      });
+    
+      collapseElement.addEventListener("hidden.bs.collapse", () => {
+        collapseElement.classList.remove(styles["collapsing"]);
+        collapseElement.classList.add(styles["collapse"]);
+        collapseElement.style.height = null; // Ukrywanie animacji
+
+      });
     }
-  });
 
-  // Kiedy element jest w trakcie przesunięcia na ukryty stan
-  collapseElement.addEventListener("hide.bs.collapse", () => {
-    collapseElement.classList.add('collapsing'); // Dodaj klasę collapsing
-  });
-
-  // Po zakończeniu stanu przejścia i całkowitym zwinięciu
-  collapseElement.addEventListener("hidden.bs.collapse", () => {
-    collapseElement.classList.remove('collapsing'); // Usuń klasę collapsing
-    collapseElement.classList.remove(styles["show"]); // Usuń klasę show
-    if (icon) {
-      icon.classList.replace("icon-up", "icon-down");
-    } else {
-      console.error("Nie znaleziono ikony w przycisku");
-    }
-  });
-} else {
+else {
   console.error("Nie znaleziono elementu #comparisonTable w kontenerze");
 }
   }
